@@ -15,3 +15,7 @@ do
 
   cd ..
 done
+
+## FOMO Bot
+
+A Solana memecoin launch scanner (DexScreener + RugCheck, scoring, console/Telegram alerts, and paper trading) lives in [`fomo-bot/`](fomo-bot/). See [fomo-bot/README.md](fomo-bot/README.md).

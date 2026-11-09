@@ -1,0 +1,44 @@
+# FOMO Bot — scanner + paper trading config
+# No private keys. No real trades. Paper only.
+
+scan:
+  poll_seconds: 45
+  # How many latest DexScreener token profiles to consider each pass
+  profile_limit: 40
+  # Max mint addresses to batch into one /tokens request
+  batch_size: 20
+  chain: solana
+
+filters:
+  min_liquidity_usd: 5000
+  max_liquidity_usd: 500000
+  max_pair_age_minutes: 180
+  min_pair_age_minutes: 1
+  min_buys_m5: 10
+  min_buy_sell_ratio_m5: 1.2
+  min_volume_h1_usd: 2000
+  max_fdv_usd: 5000000
+  # RugCheck: lower is safer; skip check if API fails
+  use_rugcheck: true
+  max_rugcheck_score: 500
+  require_lp_locked: false
+
+scoring:
+  # Weighted score 0-100; alert/paper-trade if >= min_score
+  min_score: 55
+  weight_liquidity: 20
+  weight_momentum: 35
+  weight_buy_pressure: 25
+  weight_safety: 20
+
+paper:
+  enabled: true
+  buy_usd: 50
+  take_profit_multiples: [2.0, 5.0]   # sell 50% at 2x, rest at 5x
+  stop_loss_pct: 0.40                 # exit if down 40%
+  max_open_positions: 10
+  positions_file: data/positions.json
+
+alerts:
+  console: true
+  telegram: true   # only sends if TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID set
